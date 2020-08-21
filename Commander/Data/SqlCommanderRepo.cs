@@ -34,9 +34,22 @@ namespace Commander.Data
             _context.Command.Add(cmd);
         }
 
+        void ICommanderRepo.UpdateCommand(Command cmd)
+        {
+            // Nothing
+        }
+
         bool ICommanderRepo.SaveChanges()
         {
             return (_context.SaveChanges() > 0);
+        }
+
+        void ICommanderRepo.DeleteCommand(Command cmd)
+        {
+            if (cmd == null)
+                throw new ArgumentNullException(nameof(cmd));
+
+            _context.Command.Remove(cmd);
         }
     }
 }

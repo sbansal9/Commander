@@ -11,6 +11,7 @@ using Commander.Data;
 using Commander.Dtos;
 using Commander.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Commander.Controllers
@@ -62,6 +63,89 @@ namespace Commander.Controllers
 
             return CreatedAtRoute(nameof(GetCommandById), new { Id = commandReadDto.Id }, commandReadDto);   // Creates object and returns location of the newly created object
             //return Ok(commandReadDto);
+        }
+
+        // PUT api/commands/{id}
+        // Body (in Postman) to test
+        /*
+         * {
+                "howTo": "Run a .Net Core application",
+                "line": "dotnet run",
+                "Platform": ".Net"
+            }
+         * */
+        [HttpPut("{Id}")]
+        public ActionResult UpdateCommand(int id, CommandUpdateDto commandUpdateDto)
+        {
+            // Check we have an object in our repository to update
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if (commandModelFromRepo == null)
+                return NotFound();
+
+            _mapper.Map(commandUpdateDto, commandModelFromRepo);   // Map commandUpdateDto to commandModelFromRepo
+
+            _repository.UpdateCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        // PATCH
+        // Attributes -- Add, Remove, Replace, Copy, Move, Test
+        //Example:  (All operations need to complete successfully)
+        //   [
+        //      {
+        //          "op": "replace",
+        //          "path": "/howto",
+        //          "value": "Some new value"
+        //      },
+        //      {
+        //          "op": "test",
+        //          "path": "/line",
+        //          "value": "dotnet new"
+        //      }
+        //   ]
+
+        // PATCH api/commands/{{id}
+        [HttpPatch("{Id}")]
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDto> patchDoc)
+        {
+            // Check we have an object in our repository to update
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if (commandModelFromRepo == null)
+                return NotFound();
+
+            // To apply patch, need to create CommandUpdateDto object
+            var commandToPatch = _mapper.Map<CommandUpdateDto>(commandModelFromRepo);   // Uses CommandProfile: 4th mapping
+
+            // Apply patch
+            patchDoc.ApplyTo(commandToPatch, ModelState);
+
+            // Do validation check
+            if (!TryValidateModel(commandToPatch))
+                return ValidationProblem(ModelState);
+
+            _mapper.Map(commandToPatch, commandModelFromRepo);   // Map commandToPatch to commandModelFromRepo
+
+            _repository.UpdateCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        // DELETE api/commands/{id}
+        [HttpDelete("{Id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            // Check we have an object in our repository to update
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if (commandModelFromRepo == null)
+                return NotFound();
+
+            _repository.DeleteCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }

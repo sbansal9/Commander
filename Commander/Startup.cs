@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace Commander
 {
@@ -33,7 +34,12 @@ namespace Commander
                 Configuration.GetConnectionString("CommanderConnection")
             ));
 
-            services.AddControllers();
+            //services.AddControllers();
+            // ***  Need to replace above line with following to make PATCH work ***
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
 
 

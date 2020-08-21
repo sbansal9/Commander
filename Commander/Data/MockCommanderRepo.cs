@@ -30,7 +30,17 @@ namespace Commander.Data
             throw new NotImplementedException();
         }
 
+        void ICommanderRepo.DeleteCommand(Command cmd)
+        {
+            throw new NotImplementedException();
+        }
+
         bool ICommanderRepo.SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICommanderRepo.UpdateCommand(Command cmd)
         {
             throw new NotImplementedException();
         }
