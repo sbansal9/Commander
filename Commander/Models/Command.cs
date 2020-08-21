@@ -8,14 +8,14 @@ namespace Commander.Models
 {
     public class Command
     {
-        public Command() { }
-        public Command(int id, string howTo, string line, string platform)
-        {
-            Id = id;
-            HowTo = howTo;
-            Line = line;
-            Platform = platform;
-        }
+        //public Command() { }
+        //public Command(int id, string howTo, string line, string platform)
+        //{
+        //    Id = id;
+        //    HowTo = howTo;
+        //    Line = line;
+        //    Platform = platform;
+        //}
 
         [Key]
         public int Id { get; set; }
