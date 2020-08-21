@@ -18,20 +18,25 @@ namespace Commander.Data
 
         public IEnumerable<Command> GetAllCommands()
         {
-            //var commands = new List<Command>
-            //{
-            //    new Command { Id = 0, HowTo = "Boil an egg", Line = "Boil Water", Platform = "Ketle & Pan" },
-            //    new Command { Id = 2, HowTo = "Cut Bread", Line = "Get a knife", Platform = "Knife & chopping board" },
-            //    new Command { Id = 3, HowTo = "Make cup of tea", Line = "Place teabag in cu[", Platform = "Ketle & Cup" }
-            //};
-
-            //return commands;
             return _context.Command.ToList();
         }
 
         public Command GetCommandById(int id)
         {
             return _context.Command.FirstOrDefault(p => p.Id == id);
+        }
+
+        void ICommanderRepo.CreateCommand(Command cmd)
+        {
+            if (cmd == null)
+                throw new ArgumentNullException(nameof(cmd));
+
+            _context.Command.Add(cmd);
+        }
+
+        bool ICommanderRepo.SaveChanges()
+        {
+            return (_context.SaveChanges() > 0);
         }
     }
 }

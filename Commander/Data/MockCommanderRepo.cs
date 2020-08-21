@@ -24,5 +24,15 @@ namespace Commander.Data
         {
             return new Command { Id = 0, HowTo = "Boil an egg", Line = "Boil Water", Platform = "Ketle & Pan" };
         }
+
+        void ICommanderRepo.CreateCommand(Command cmd)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICommanderRepo.SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
