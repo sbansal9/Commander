@@ -145,7 +145,7 @@ namespace Commander.Controllers
             _repository.DeleteCommand(commandModelFromRepo);
             _repository.SaveChanges();
 
-            return NoContent();
+            return NoContent();   // Return noContent message.
         }
     }
 }
