@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Commander.Data;
+using Commander.Models.DB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -52,7 +54,22 @@ namespace Commander
             // -- Transient -- New instance of object created every time
             //services.AddScoped<ICommanderRepo, MockCommanderRepo>();  // Create once per client request
             services.AddScoped<ICommanderRepo, SqlCommanderRepo>();  // Create once per client request
+
+
+
+
+
+            // [Asma Khalid]: Register SQL database configuration context as services.    
+            services.AddDbContext<CommanderDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CommanderDB")));
+
+
+            //services.AddIdentity<SpGetProductByPriceGreaterThan1000, SpGetProductByID>()
+            //         .AddEntityFrameworkStores<CommanderDBContext>()
+            //         .AddDefaultTokenProviders();
         }
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

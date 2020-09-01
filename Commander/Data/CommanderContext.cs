@@ -1,4 +1,5 @@
 ﻿using Commander.Models;
+using Commander.Models.DB;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,7 @@ namespace Commander.Data
         }
 
         public DbSet<Command> Command { get; set; }
+        public DbSet<SpGetProductByPriceGreaterThan1000> Products { get; set; }
+        public DbSet<SpGetProductByID> Product { get; set; }
     }
 }

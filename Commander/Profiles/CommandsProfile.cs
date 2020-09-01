@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Commander.Dtos;
 using Commander.Models;
+using Commander.Models.DB;
+using System.Collections.Generic;
 
 namespace Commander.Profiles
 {
@@ -15,6 +17,8 @@ namespace Commander.Profiles
 
             CreateMap<CommandUpdateDto, Command>();
             CreateMap<Command, CommandUpdateDto>();
+
+            CreateMap<List<SpGetProductByPriceGreaterThan1000>, ProductViewModel>();
         }
     }
 }

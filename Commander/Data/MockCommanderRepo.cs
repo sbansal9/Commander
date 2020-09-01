@@ -1,4 +1,5 @@
 ﻿using Commander.Models;
+using Commander.Models.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,16 @@ namespace Commander.Data
         }
 
         void ICommanderRepo.DeleteCommand(Command cmd)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<SpGetProductByID>> ICommanderRepo.GetProductByIDAsync(int productId)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<SpGetProductByPriceGreaterThan1000>> ICommanderRepo.GetProductByPriceGreaterThan1000Async()
         {
             throw new NotImplementedException();
         }
