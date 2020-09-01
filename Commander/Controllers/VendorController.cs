@@ -53,7 +53,8 @@ namespace Commander.Controllers
                 // Settings.
                 m.ProductsGreaterThan1000 = await _repository.GetProductByPriceGreaterThan1000Async();
 
-                return Ok(_mapper.Map<ProductViewModel>(m.ProductsGreaterThan1000));  // Map commandItem to <CommandReadDto>
+                //return Ok(_mapper.Map<ProductViewModel>(m.ProductsGreaterThan1000));  // Map commandItem to <CommandReadDto>
+                return Ok(m);
             }
             catch (Exception ex)
             {
