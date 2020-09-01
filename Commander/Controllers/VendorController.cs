@@ -31,7 +31,29 @@ namespace Commander.Controllers
         }
 
 
-        // GET api/commands
+        // GET api/vendor
+        [HttpGet]
+        public async Task<ActionResult<SpGetProductByPriceGreaterThan1000>> GetAllProductsGreaterThan1000()
+        {
+            ProductViewModel m = new ProductViewModel();
+
+            try
+            {
+                // Settings.
+                m.ProductsGreaterThan1000 = await _repository.GetProductByPriceGreaterThan1000Async();
+
+                //return Ok(_mapper.Map<ProductViewModel>(m.ProductsGreaterThan1000));  // Map commandItem to <CommandReadDto>
+                return Ok(m);
+            }
+            catch (Exception ex)
+            {
+                // Info.
+                Console.Write(ex);
+                return NotFound();
+            }
+        }
+
+        // GET api/vendor
         [HttpGet("{Id}", Name = "GetProductById")]
         public async Task<ActionResult<SpGetProductByPriceGreaterThan1000>> GetProductById(int id)
         {
@@ -50,8 +72,8 @@ namespace Commander.Controllers
                     m.ProductDetail = details.First();
                 }
 
-                // Settings.
-                m.ProductsGreaterThan1000 = await _repository.GetProductByPriceGreaterThan1000Async();
+                //// Settings.
+                //m.ProductsGreaterThan1000 = await _repository.GetProductByPriceGreaterThan1000Async();
 
                 //return Ok(_mapper.Map<ProductViewModel>(m.ProductsGreaterThan1000));  // Map commandItem to <CommandReadDto>
                 return Ok(m);
